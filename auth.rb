@@ -10,7 +10,7 @@ AUTH_SUCCESS = 0
 username = gets.chomp
 password = gets.chomp
 
-if password =~ /^\d{6}$/ then
+unless password =~ /^\d{6}$/ then
     exit(AUTH_FAIL)
 end
 
@@ -27,7 +27,7 @@ totp = ROTP::TOTP.new(otp_secret)
 
 result = totp.verify(password) ? AUTH_SUCCESS : AUTH_FAIL
 
-if result then
+if result == AUTH_SUCCESS then
     db.execute("update users set last_login = datetime('now', 'localtime') where name = ?", [username])
 end
 
