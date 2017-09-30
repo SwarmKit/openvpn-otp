@@ -12,9 +12,9 @@ password = gets.chomp
 
 db = SQLite3::Database.new "/usr/local/etc/openvpn/users.db"
 
-row = db.execute("select * from users where name = ?", [username])
+row = db.execute("select name, otp_secret from users where name = ?", [username])
 
-if row.size == 0 then
+if row.size != 1 then
     exit(AUTH_FAIL)
 end
 
