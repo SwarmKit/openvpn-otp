@@ -7,8 +7,15 @@ require "rotp"
 AUTH_FAIL = 1
 AUTH_SUCCESS = 0
 
-username = gets.chomp
-password = gets.chomp
+if ARGV.size != 1 then
+    exit(AUTH_FAIL)
+end
+
+username, password = "", ""
+open(ARGV.first, "r") do |f|
+    username = f.readline.chomp
+    password = f.readline.chomp
+end
 
 unless password =~ /^\d{6}$/ then
     exit(AUTH_FAIL)
