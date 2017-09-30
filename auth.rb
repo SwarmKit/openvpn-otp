@@ -26,4 +26,9 @@ otp_secret = row.first[1]
 totp = ROTP::TOTP.new(otp_secret)
 
 result = totp.verify(password) ? AUTH_SUCCESS : AUTH_FAIL
+
+if result then
+    db.execute("update users set last_login = datetime('now', 'localtime') where name = ?", [username])
+end
+
 exit(result)

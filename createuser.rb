@@ -30,7 +30,8 @@ db = SQLite3::Database.new "/usr/local/etc/openvpn/users.db"
 rows = db.execute <<-DDL
 create table if not exists users (
     name text primary key,
-    otp_secret text not null
+    otp_secret text not null,
+    last_login numeric
 );  
 DDL
 
