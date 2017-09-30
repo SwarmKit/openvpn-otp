@@ -10,6 +10,10 @@ AUTH_SUCCESS = 0
 username = gets.chomp
 password = gets.chomp
 
+if password =~ /^\d{6}$/ then
+    exit(AUTH_FAIL)
+end
+
 db = SQLite3::Database.new "/usr/local/etc/openvpn/users.db"
 
 row = db.execute("select name, otp_secret from users where name = ?", [username])

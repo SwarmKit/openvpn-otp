@@ -10,7 +10,11 @@ while true do
     username = gets
     if username then
         username.chomp!
-        break unless username.empty?
+        if (!username.empty? && username =~ /^[a-zA-Z0-9_\-@.]{1,30}$/) then
+            break
+        else
+            puts "invalid username."
+        end
     else
         exit()
     end
