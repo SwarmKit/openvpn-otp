@@ -32,10 +32,10 @@ end
 otp_secret = row.first[1]
 totp = ROTP::TOTP.new(otp_secret)
 
-result = totp.verify(password) ? AUTH_SUCCESS : AUTH_FAIL
+result = totp.verify_with_drift(password, 30) 
 
-if result == AUTH_SUCCESS then
+if result then
     db.execute("update users set last_login = datetime('now', 'localtime') where name = ?", [username])
 end
 
-exit(result)
+exit(result ? AUTH_SUCCESS : AUTH_FAIL)
